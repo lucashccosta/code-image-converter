@@ -1,0 +1,11 @@
+# Adonis default .gitignore ignores
+node_modules*
+build*
+coverage*
+.vscode*
+.DS_STORE*
+src/.env
+tmp*
+
+# Additional .gitignore ignores (any custom file you wish)
+.idea*

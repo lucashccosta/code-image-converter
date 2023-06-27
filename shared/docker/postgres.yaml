@@ -1,0 +1,17 @@
+version: "3.8"
+services:
+  postgres:
+    container_name: shared-postgres
+    image: postgres:15.3
+    environment:
+        - POSTGRES_USER=postgres
+        - POSTGRES_PASSWORD=postgres
+    ports:
+        - 5442:5432
+    networks: 
+        - code_image_converter
+    volumes: 
+        - ./data/postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data: {}

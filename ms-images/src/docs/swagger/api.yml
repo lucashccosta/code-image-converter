@@ -1,0 +1,148 @@
+openapi: 3.0.3
+info:
+  title: ms-images
+  description: |-
+    Microserviço responsável por gerenciar (CRUD) as imagens que serão convertidas de PNG para JPG.
+  contact:
+    email: lucas.hcruz.costa@gmail.com
+  license:
+    name: MIT License
+    url: https://opensource.org/license/mit/
+  version: 1.0.0
+
+externalDocs:
+  description: GitHub
+  url: http://swagger.io
+
+servers:
+  - url: http://localhost:3333/api/v1
+    description: Ambiente de desenvolvimentos
+
+tags:
+  - name: images
+    description: Recursos de imagens
+paths:
+  /api/v1/images:
+    get:
+      tags:
+        - images
+      summary: Lista de todas as imagens enviadas
+      responses:
+        200:
+          description: 200 OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Image"
+
+    post:
+      tags:
+        - images
+      summary: Upload da imagem PNG para ser convertida para JPG
+      requestBody:
+        content:
+          image/png:
+            name: image
+            schema:
+              type: string
+              format: binary
+      responses:
+        200:
+          description: 200 OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Image"
+
+  /api/v1/images/{uuid}:
+    get:
+      tags:
+        - images
+      summary: Visualiza detalhes da imagem convertida
+      parameters:
+        - $ref: "#/components/parameters/ImageUuid"
+      responses:
+        200:
+          description: 200 OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ImageDetail"
+
+components:
+  parameters:
+    ImageUuid:
+      in: path
+      name: uuid
+      description: Identificador da imagem
+      required: true
+      schema:
+        type: string
+
+  schemas:
+    Image:
+      type: object
+      properties:
+        id:
+          type: integer
+        uuid:
+          type: string
+          format: uuid
+        status:
+          type: object
+          properties:
+            isProcessing:
+              type: boolean
+            isConverted:
+              type: boolean
+            isFailed:
+              type: boolean
+        # files:
+        #   type: object
+        #   properties:
+        #     uploaded: 
+        #       type: string
+        #     converted:
+        #       type: string
+        links:
+          type: object
+          properties:
+            details: 
+              type: string
+              format: url
+    
+    ImageDetail:
+      type: object
+      properties:
+        id:
+          type: integer
+        uuid:
+          type: string
+          format: uuid
+        status:
+          type: object
+          properties:
+            isProcessing:
+              type: boolean
+            isConverted:
+              type: boolean
+            isFailed:
+              type: boolean
+        files:
+          type: object
+          properties:
+            uploaded: 
+              type: string
+            converted:
+              type: string
+        dates:
+          type: object
+          properties:
+            createdAt:
+              type: string
+              format: date-time
+            updatedAt:
+              type: string
+              format: date-time
