@@ -26,4 +26,12 @@ export default Env.rules({
     PG_USER: Env.schema.string(),
     PG_PASSWORD: Env.schema.string.optional(),
     PG_DB_NAME: Env.schema.string(),
+	STORAGE_SERVICE: Env.schema.string(),
+	STORAGE_SERVICE_HOST: Env.schema.string(),
+	STORAGE_SERVICE_PORT: Env.schema.number(),
+	STORAGE_SSL: Env.schema.boolean(),
+	STORAGE_REGION: Env.schema.string(),
+	STORAGE_BUCKET: Env.schema.string(),
+	STORAGE_ACCESS_KEY: Env.schema.string(),
+	STORAGE_SECRET_KEY: Env.schema.string(),
 })

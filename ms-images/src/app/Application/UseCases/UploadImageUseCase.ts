@@ -8,8 +8,9 @@ import LocalStorage from "App/Infrastructure/Adapters/Storage/Local/LocalStorage
 import ImageRepository from "App/Infrastructure/Adapters/Repositories/LucidOrm/ImageRepository";
 import ImageMapper from "../Mappers/ImageMapper";
 import InvalidArgumentException from "App/Domain/Exceptions/InvalidArgumentException";
+import MinIOStorage from "App/Infrastructure/Adapters/Storage/MinIO/MinIOStorage";
 
-@inject([LocalStorage, ImageRepository])
+@inject([MinIOStorage, ImageRepository])
 export default class UploadsImageUseCase implements UseCaseInterface<ImageSummaryDTO>
 {
     constructor(
@@ -19,12 +20,14 @@ export default class UploadsImageUseCase implements UseCaseInterface<ImageSummar
 
     public async handle(file: File): Promise<ImageSummaryDTO>
     {
-        const fileUploaded = await this.storageFile.upload(file);
+        const fileUploaded = await this.storageFile.upload(file, "/png");
         if (!fileUploaded.path) {
             throw new InvalidArgumentException();
         }
 
         const image = await this.imageRepository.create({ uploadedFile: fileUploaded.path });
+        
+        //TODO: send message to broker
         
         return ImageMapper.toSummaryDTO(image);
     }

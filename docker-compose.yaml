@@ -5,6 +5,11 @@ services:
       file: ./shared/docker/postgres.yaml
       service: postgres
 
+  minio:
+    extends:
+      file: ./shared/docker/minio.yaml
+      service: minio
+
   ms-images:
     container_name: ms-images
     build:
