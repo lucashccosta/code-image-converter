@@ -43,11 +43,15 @@ paths:
       summary: Upload da imagem PNG para ser convertida para JPG
       requestBody:
         content:
-          image/png:
-            name: image
+          multipart/form-data:
             schema:
-              type: string
-              format: binary
+              type: object
+              properties:
+                image:
+                  type: string
+                  format: binary
+              required:
+                - image
       responses:
         200:
           description: 200 OK

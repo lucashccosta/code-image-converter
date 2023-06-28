@@ -3,7 +3,7 @@ import ImageDetailDTO from "../DTOs/Images/ImageDetailDTO";
 import Uuid from "App/Domain/ValueObjects/Uuid";
 import ImageRepositoryInterface from "App/Domain/Contracts/Repositories/ImageRepositoryInterface";
 import ImageMapper from "../Mappers/ImageMapper";
-import ImageRepository from "App/Infrastructure/Adapters/LucidORM/Repositories/ImageRepository";
+import ImageRepository from "App/Infrastructure/Adapters/Repositories/LucidOrm/ImageRepository";
 import { inject } from "@adonisjs/core/build/standalone";
 
 @inject([ImageRepository])

@@ -1,7 +1,7 @@
 import UseCaseInterface from "App/Domain/Contracts/UseCaseInterface";
 import ImageSummaryDTO from "../DTOs/Images/ImageSummaryDTO";
 import { inject } from "@adonisjs/core/build/standalone";
-import ImageRepository from "App/Infrastructure/Adapters/LucidORM/Repositories/ImageRepository";
+import ImageRepository from "App/Infrastructure/Adapters/Repositories/LucidOrm/ImageRepository";
 import ImageRepositoryInterface from "App/Domain/Contracts/Repositories/ImageRepositoryInterface";
 import ImageMapper from "../Mappers/ImageMapper";
 
