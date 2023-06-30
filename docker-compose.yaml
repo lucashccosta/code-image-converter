@@ -10,6 +10,11 @@ services:
       file: ./shared/docker/minio.yaml
       service: minio
 
+  rabbitmq:
+    extends:
+      file: ./shared/docker/rabbitmq.yaml
+      service: rabbitmq
+
   ms-images:
     container_name: ms-images
     build:

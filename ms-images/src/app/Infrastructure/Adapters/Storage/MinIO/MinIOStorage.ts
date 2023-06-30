@@ -10,7 +10,7 @@ export default class MinIOStorage implements StorageInterface
 
     constructor()
     {
-        this.minio = new MinIO();
+        this.minio = MinIO.getInstance();
     }
 
     public async upload(file: File, path?: string | undefined): Promise<File> 
@@ -35,16 +35,16 @@ export default class MinIOStorage implements StorageInterface
 
     private async isBucketExists(bucket: string): Promise<boolean>
     {
-        return await this.minio.client.bucketExists(bucket);
+        return await this.minio.getClient().bucketExists(bucket);
     }
 
     private async createBucket(bucket: string): Promise<void>
     {
-        await this.minio.client.makeBucket(bucket);
+        await this.minio.getClient().makeBucket(bucket);
     }
 
     private async sendFile(bucket: string, path: string, file: File): Promise<void>
     {
-        await this.minio.client.putObject(bucket, path, Buffer.from(file.content));
+        await this.minio.getClient().putObject(bucket, path, Buffer.from(file.content));
     }
 }

@@ -34,4 +34,6 @@ export default Env.rules({
 	STORAGE_BUCKET: Env.schema.string(),
 	STORAGE_ACCESS_KEY: Env.schema.string(),
 	STORAGE_SECRET_KEY: Env.schema.string(),
+	BROKER_CONNECTION_URL: Env.schema.string(),
+	BROKER_CONSUMER: Env.schema.string(),
 })

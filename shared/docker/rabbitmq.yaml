@@ -1,0 +1,19 @@
+version: "3.8"
+services:
+  rabbitmq:
+    image: rabbitmq:3.9.29-management-alpine
+    container_name: shared-rabbitmq
+    restart: always
+    environment:
+      - RABBITMQ_DEFAULT_PASS=admin
+      - RABBITMQ_DEFAULT_USER=admin
+    ports:
+      - 15672:15672
+      - 5672:5672
+    networks: 
+      - code_image_converter
+    volumes: 
+      - ./data/rabbitmq_data:/var/lib/rabbitmq
+
+volumes:
+  rabbitmq_data: {}

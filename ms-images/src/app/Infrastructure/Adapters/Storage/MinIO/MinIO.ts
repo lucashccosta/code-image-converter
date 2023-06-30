@@ -3,9 +3,24 @@ import Env from '@ioc:Adonis/Core/Env';
 
 export default class MinIO
 {
-    public readonly client: Client;
+    public static instance: MinIO;
+    protected client: Client;
 
-    constructor() 
+    public static getInstance(): MinIO
+    {
+        if (!MinIO.instance) {
+            MinIO.instance = new MinIO();
+        }
+
+        return MinIO.instance;
+    }
+
+    public getClient(): Client
+    {
+        return this.client;
+    }
+
+    private constructor() 
     {
         this.client = new Client({
             endPoint: Env.get("STORAGE_SERVICE_HOST"),
@@ -14,5 +29,7 @@ export default class MinIO
             accessKey: Env.get("STORAGE_ACCESS_KEY"),
             secretKey: Env.get("STORAGE_SECRET_KEY"),
         });
+
+        return this;
     }
 }
