@@ -3,6 +3,7 @@ services:
   postgres:
     container_name: shared-postgres
     image: postgres:15.3
+    restart: always
     environment:
         - POSTGRES_USER=postgres
         - POSTGRES_PASSWORD=postgres

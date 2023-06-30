@@ -29,11 +29,11 @@ export default Env.rules({
 	STORAGE_SERVICE: Env.schema.string(),
 	STORAGE_SERVICE_HOST: Env.schema.string(),
 	STORAGE_SERVICE_PORT: Env.schema.number(),
-	STORAGE_SSL: Env.schema.boolean(),
+	STORAGE_SSL: Env.schema.string.optional(),
 	STORAGE_REGION: Env.schema.string(),
 	STORAGE_BUCKET: Env.schema.string(),
 	STORAGE_ACCESS_KEY: Env.schema.string(),
 	STORAGE_SECRET_KEY: Env.schema.string(),
 	BROKER_CONNECTION_URL: Env.schema.string(),
-	BROKER_CONSUMER: Env.schema.string(),
+	BROKER_CONSUMER: Env.schema.string.optional(),
 })

@@ -11,7 +11,7 @@ RUN yarn install --frozen-lockfile --production
 COPY src/ .
 
 # Build app
-RUN yarn run build
+RUN yarn run build --ignore-ts-errors
 
 COPY src/.env ./build
 

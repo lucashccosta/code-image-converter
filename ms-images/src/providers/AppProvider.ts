@@ -1,5 +1,4 @@
 import type { ApplicationContract } from '@ioc:Adonis/Core/Application'
-import ImageRepository from 'App/Infrastructure/Adapters/LucidORM/Repositories/ImageRepository'
 
 export default class AppProvider {
   constructor (

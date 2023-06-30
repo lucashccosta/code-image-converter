@@ -1,0 +1,116 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: ms-images
+  namespace: code-image-converter
+data:
+  PORT: "3333"
+  HOST: "0.0.0.0"
+  NODE_ENV: development
+  DB_CONNECTION: pg
+  STORAGE_SERVICE: minio
+---
+####
+# APP_KEY: xZyoUvBnCGROEeuab0DuW5UqWhf0vvps
+# BROKER_CONNECTION_URL: amqp://admin:admin@<MACHINE_IP||DOCKER_IP>:5672/code-image-converter (/shared/docker/minio.yaml)
+# BROKER_CONSUMER: ms-images
+# PG_DB_NAME: ms_images
+# PG_HOST: <MACHINE_IP||DOCKER_IP>
+# PG_PASSWORD: postgres (/shared/docker/minio.yaml)
+# PG_PORT: 5442 (/shared/docker/minio.yaml)
+# PG_USER: postgres (/shared/docker/minio.yaml)
+# STORAGE_ACCESS_KEY: B0SXLfVUCHKhSpfqWiWb
+# STORAGE_BUCKET: code-images
+# STORAGE_REGION: us-east-1
+# STORAGE_SECRET_KEY: UBYWvCsAUsAilXLbZ56A75YSyZkZtqmoJsz69IsJ
+# STORAGE_SERVICE_HOST: <MACHINE_IP||DOCKER_IP>
+# STORAGE_SERVICE_PORT: 9000 (/shared/docker/minio.yaml)
+####
+apiVersion: v1
+kind: Secret
+metadata:
+  name: ms-images
+  namespace: code-image-converter
+type: Opaque
+data:
+  APP_KEY: eFp5b1V2Qm5DR1JPRWV1YWIwRHVXNVVxV2hmMHZ2cHM=
+  BROKER_CONNECTION_URL: YW1xcDovL2FkbWluOmFkbWluQDE5Mi4xNjguMS4xMzo1NjcyL2NvZGUtaW1hZ2UtY29udmVydGVy
+  BROKER_CONSUMER: bXMtaW1hZ2Vz
+  PG_DB_NAME: bXNfaW1hZ2Vz
+  PG_HOST: MTkyLjE2OC4xLjEz
+  PG_PASSWORD: cG9zdGdyZXM=
+  PG_PORT: NTQ0Mg==
+  PG_USER: cG9zdGdyZXM=
+  STORAGE_ACCESS_KEY: QjBTWExmVlVDSEtoU3BmcVdpV2I=
+  STORAGE_BUCKET: Y29kZS1pbWFnZXM=
+  STORAGE_REGION: dXMtZWFzdC0x
+  STORAGE_SECRET_KEY: VUJZV3ZDc0FVc0FpbFhMYlo1NkE3NVlTeVprWnRxbW9Kc3o2OUlzSg==
+  STORAGE_SERVICE_HOST: MTkyLjE2OC4xLjEz
+  STORAGE_SERVICE_PORT: OTAwMA==
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ms-images
+  namespace: code-image-converter
+spec:
+  selector:
+    matchLabels:
+      app: ms-images
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: ms-images
+    spec:
+      containers:
+      - name: ms-images
+        image: lucashccosta/ms-images:latest
+        envFrom:
+          - configMapRef:
+              name: ms-images
+          - secretRef:
+              name: ms-images
+        resources:
+          requests:
+            cpu: 100m
+            memory: 100Mi
+          limits:
+            cpu: 200m
+            memory: 200Mi
+        ports:
+        - containerPort: 3333
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ms-images
+  namespace: code-image-converter
+spec:
+  selector:
+    app: ms-images
+  type: ClusterIP
+  ports:
+  - name: ms-images-svc
+    port: 3333
+    targetPort: 3333
+# ---
+# apiVersion: autoscaling/v2
+# kind: HorizontalPodAutoscaler
+# metadata:
+#   name: ms-images
+#   namespace: code-image-converter
+# spec:
+#   scaleTargetRef:
+#     apiVersion: apps/v1
+#     kind: Deployment
+#     name: ms-images
+#   minReplicas: 1
+#   maxReplicas: 5
+#   metrics:
+#   - type: Resource
+#     resource:
+#       name: cpu
+#       target:
+#         type: Utilization
+#         averageUtilization: 80
