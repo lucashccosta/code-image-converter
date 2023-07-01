@@ -1,0 +1,21 @@
+version: "3.8"
+services:
+  grafana:
+    container_name: shared-grafana
+    image: grafana/grafana:10.0.1
+    restart: unless-stopped
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+      - GF_USERS_DEFAULT_THEME=dark
+      - GF_USERS_ALLOW_SIGN_UP=false
+      - GF_USERS_ALLOW_ORG_CREATE=false
+    ports:
+      - 3000:3000
+    networks: 
+      - code_image_converter
+    volumes: 
+      - ./data/grafana_data:/var/lib/grafana
+    user: "0" # utilizar para permitir utilização do volume acima (se não utilizar retorna erro de permissão)
+
+volumes:
+  grafana_data: {}

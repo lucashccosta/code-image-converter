@@ -10,10 +10,12 @@ services:
     ports:
       - 15672:15672
       - 5672:5672
+      - 15692:15692
     networks: 
       - code_image_converter
     volumes: 
-      - ./data/rabbitmq_data:/var/lib/rabbitmq
+      - ../data/rabbitmq_data:/var/lib/rabbitmq
+      - ./plugins:/etc/rabbitmq/enabled_plugins
 
 volumes:
   rabbitmq_data: {}

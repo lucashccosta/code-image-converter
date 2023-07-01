@@ -14,5 +14,15 @@ services:
     volumes: 
         - ./data/postgres_data:/var/lib/postgresql/data
 
+  postgres-prometheus-exporter:
+    container_name: shared-postgres-prom
+    image: prometheuscommunity/postgres-exporter
+    environment:
+      - DATA_SOURCE_NAME: "postgresql://postgres:postgres@postgres:5432"
+    ports:
+      - 9187:9187
+    networks: 
+      - code_image_converter
+
 volumes:
   postgres_data: {}

@@ -12,8 +12,18 @@ services:
 
   rabbitmq:
     extends:
-      file: ./shared/docker/rabbitmq.yaml
+      file: ./shared/docker/rabbitmq/rabbitmq.yaml
       service: rabbitmq
+
+  prometheus:
+    extends:
+      file: ./shared/docker/prometheus/prometheus.yaml
+      service: prometheus
+
+  grafana:
+    extends:
+      file: ./shared/docker/grafana.yaml
+      service: grafana
 
   ms-images:
     container_name: ms-images

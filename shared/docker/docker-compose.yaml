@@ -5,6 +5,11 @@ services:
       file: postgres.yaml
       service: postgres
 
+  postgres-prometheus-exporter:
+    extends:
+      file: postgres.yaml
+      service: postgres-prometheus-exporter
+
   minio:
     extends:
       file: minio.yaml
@@ -12,8 +17,18 @@ services:
 
   rabbitmq:
     extends:
-      file: rabbitmq.yaml
+      file: ./rabbitmq/rabbitmq.yaml
       service: rabbitmq
+
+  prometheus:
+    extends:
+      file: ./prometheus/prometheus.yaml
+      service: prometheus
+
+  grafana:
+    extends:
+      file: grafana.yaml
+      service: grafana
 
 networks:
   code_image_converter:
