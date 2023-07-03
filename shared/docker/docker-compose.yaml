@@ -25,6 +25,11 @@ services:
       file: ./prometheus/prometheus.yaml
       service: prometheus
 
+  loki:
+    extends:
+      file: loki.yaml
+      service: loki
+
   grafana:
     extends:
       file: grafana.yaml
