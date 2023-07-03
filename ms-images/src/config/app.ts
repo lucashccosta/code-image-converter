@@ -66,7 +66,7 @@ export const http: ServerConfig = {
   | HTTP request and set it as `x-request-id` header.
   |
   */
-  generateRequestId: false,
+  generateRequestId: true,
 
   /*
   |--------------------------------------------------------------------------
@@ -181,6 +181,28 @@ export const logger: LoggerConfig = {
   |
   */
   prettyPrint: Env.get('NODE_ENV') === 'development',
+
+  /*
+  |--------------------------------------------------------------------------
+  | Formatters
+  |--------------------------------------------------------------------------
+  |
+  | https://betterstack.com/community/guides/logging/how-to-install-setup-and-use-pino-to-log-node-js-applications/#using-string-labels-for-severity-levels
+  |
+  */
+  formatters: {
+    bindings: (bindings) => {
+      return {
+        pid: bindings.pid,
+        host: bindings.hostname,
+        node_version: process.version,
+      };
+    },
+    level: (labelName: string, labelNumber: number) => { 
+      return { level: labelName.toUpperCase() } 
+    }
+  },
+  timestamp: () => `,"timestamp":"${new Date(Date.now()).toISOString()}"`
 }
 
 /*
