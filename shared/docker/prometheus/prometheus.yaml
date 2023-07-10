@@ -3,7 +3,7 @@ services:
   prometheus:
     container_name: shared-prometheus
     image: prom/prometheus:v2.45.0
-    restart: unless-stopped
+    # restart: unless-stopped
     ports:
         - 9090:9090
     networks: 
